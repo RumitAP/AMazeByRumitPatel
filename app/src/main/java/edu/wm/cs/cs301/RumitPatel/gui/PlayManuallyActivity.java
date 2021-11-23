@@ -223,7 +223,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
      * takes user to the winning screen.
      */
     private void Winning() {
-        intent = new Intent(this, PlayAnimationActivity.class);
+        intent = new Intent(this, WinningActivity.class);
         intent.putExtra("Clicks",clicks);
         intent.putExtra("Starting Distance", startingDistToExit);
         startActivity(intent);
