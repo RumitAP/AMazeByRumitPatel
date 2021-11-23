@@ -3,6 +3,7 @@ package edu.wm.cs.cs301.RumitPatel.gui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,12 +36,11 @@ public class WinningActivity extends AppCompatActivity {
         Path = findViewById(R.id.shortestPath1);
         Length = findViewById(R.id.pathLegnth1);
 
-        Path.setText("Shortest Path: " + shortestPath);
-        Length.setText("Your Path: " + pathLength);
+        Path.setText("Shortest Path: " + "100");
+        Length.setText("Your Path: " + "200");
 
-        Snackbar mySnackBar = Snackbar.make(textView, "Pressing back button will let you restart.",
-                30000);
-        mySnackBar.show();
+        Toast.makeText(WinningActivity.this, "Pressing the back button will let you restart.",
+                Toast.LENGTH_SHORT).show();
 
 
 

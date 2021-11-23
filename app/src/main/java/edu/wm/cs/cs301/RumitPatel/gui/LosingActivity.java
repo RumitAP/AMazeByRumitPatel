@@ -45,9 +45,9 @@ public class LosingActivity extends AppCompatActivity {
         Consumption = findViewById(R.id.energyConsumption);
         Path = findViewById(R.id.shortestPath);
         Length = findViewById(R.id.pathLegnth);
-        Consumption.setText("Energy Consumption: "+energyConsumption);
-        Path.setText("Shortest Path: " + shortestPath);
-        Length.setText("Your Path: " + pathLength);
+        Consumption.setText("Energy Consumption: "+"2000");
+        Path.setText("Shortest Path: " + "100");
+        Length.setText("Your Path: " + "200");
 
 
 

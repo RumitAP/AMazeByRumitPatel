@@ -14,8 +14,8 @@
 
     <TextView
         android:id="@+id/energyConsumption"
-        android:layout_width="166dp"
-        android:layout_height="wrap_content"
+        android:layout_width="196dp"
+        android:layout_height="50dp"
         android:layout_marginStart="118dp"
         android:layout_marginEnd="118dp"
         android:layout_marginBottom="420dp"
@@ -37,7 +37,7 @@
         android:fontFamily="sans-serif-black"
         android:textSize="20sp"
         android:translationX="-750dp"
-        android:translationY="350dp"
+        android:translationY="365dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/pathused"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
         android:fontFamily="sans-serif-black"
         android:textSize="20sp"
         android:translationX="-1025dp"
-        android:translationY="425dp"
+        android:translationY="475dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/energy"
         app:layout_constraintStart_toStartOf="parent"
