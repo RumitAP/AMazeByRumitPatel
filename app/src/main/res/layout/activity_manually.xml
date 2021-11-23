@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#5981A1"
+    android:backgroundTint="#88B8CD"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".MainActivity">
+
+    <ToggleButton
+        android:id="@+id/solutionToggle"
+        android:layout_width="136dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#03A9F4"
+        android:drawableStart="@drawable/selector"
+        android:textOff="    Solution off"
+        android:textOn="    Solution on"
+        android:translationY="460dp" />
+
+    <ToggleButton
+        android:id="@+id/visibleToggle"
+        android:layout_width="136dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#9E8D8D"
+        android:drawableStart="@drawable/selector"
+        android:textOff="    Visible Walls off"
+        android:textOn="    Visible Walls on"
+        android:translationY="350dp" />
+
+    <Button
+        android:id="@+id/zoom_in"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary"
+        android:backgroundTint="#8ADC8D"
+        android:text="+"
+        android:textColor="@android:color/white"
+        android:textSize="30dp"
+        android:translationX="330dp"
+        android:translationY="-100dp"
+        app:layout_constraintBottom_toBottomOf="@id/zoom_in" />
+
+    <Button
+        android:id="@+id/zoom_out"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary"
+        android:backgroundTint="#CC6B6B"
+        android:text="-"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:translationX="330dp"
+        android:translationY="-100dp"
+        app:layout_constraintBottom_toTopOf="@id/zoom_out" />
+
+    <Button
+        android:id="@+id/shortcut"
+        android:layout_width="398dp"
+        android:layout_height="276dp"
+        android:background="@color/colorPrimary"
+        android:backgroundTint="#8ADC8D"
+        android:text="Go2Winning"
+        android:textColor="@android:color/white"
+        android:textSize="30dp"
+        android:translationY="-100dp" />
+
+    <ImageButton
+        android:id="@+id/imageLeft"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignLeft="@id/imageJump"
+        android:background="@drawable/left"
+        android:translationX="175dp"
+        android:translationY="0dp"
+        app:srcCompat="@drawable/abc_vector_test" />
+
+    <ImageButton
+        android:id="@+id/imageForward"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignTop="@id/imageJump"
+        android:layout_marginTop="-72dp"
+        android:background="@drawable/forward"
+        android:translationX="243dp"
+        android:translationY="-50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.484" />
+
+    <ToggleButton
+        android:id="@+id/wholeMazeToggle"
+        android:layout_width="99dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#673AB7"
+        android:baselineAligned="false"
+        android:buttonTint="#673AB7"
+        android:drawableStart="@drawable/selector"
+        android:textOff="    Map off"
+        android:textOn="    Map on"
+        android:translationY="-10dp" />
+
+    <ImageButton
+        android:id="@+id/imageRight"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignRight="@id/imageJump"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/right"
+        android:translationX="312dp"
+        android:translationY="-120dp" />
+
+
+    <ImageButton
+        android:id="@+id/imageJump"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:background="@drawable/jump"
+        android:translationX="245dp"
+        android:translationY="-125dp" />
+
+</LinearLayout>

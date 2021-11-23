@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">AMazeByRumitPatel</string>
+    <string name="welcome">Welcome to the Maze</string>
+    <string name="loading">..............Loading.............</string>
+    <string name="generating">Generating the Maze</string>
+    <string-array name="builder">
+        <item>DFS</item>
+        <item>Prim</item>
+        <item>Boruvka</item>
+    </string-array>
+    <string-array name="driver">
+        <item>Select Here</item>
+        <item>Manual</item>
+        <item>Wizard</item>
+        <item>Wallfollower</item>
+    </string-array>
+    <string-array name="rooms">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="robot">
+        <item>Premium</item>
+        <item>Mediocre</item>
+        <item>Soso</item>
+        <item>Shaky</item>
+    </string-array>
+
+</resources>

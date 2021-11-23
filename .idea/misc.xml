@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/LowBattery.xml" value="0.216796875" />
+        <entry key="app/src/main/res/drawable/left_foreground.xml" value="0.216796875" />
+        <entry key="app/src/main/res/drawable/selector.xml" value="0.16944444444444445" />
+        <entry key="app/src/main/res/layout/activity_amaze.xml" value="0.2739071038251366" />
+        <entry key="app/src/main/res/layout/activity_animation.xml" value="0.2739071038251366" />
+        <entry key="app/src/main/res/layout/activity_generating.xml" value="0.2739071038251366" />
+        <entry key="app/src/main/res/layout/activity_losing.xml" value="0.2739071038251366" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.215625" />
+        <entry key="app/src/main/res/layout/activity_manually.xml" value="0.24" />
+        <entry key="app/src/main/res/layout/activity_winning.xml" value="0.2739071038251366" />
+        <entry key="app/src/main/res/layout/spinner.xml" value="0.27424863387978143" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.216796875" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
