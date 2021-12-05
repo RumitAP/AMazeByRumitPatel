@@ -12,6 +12,8 @@ import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import edu.wm.cs.cs301.RumitPatel.R;
+import edu.wm.cs.cs301.RumitPatel.generation.Maze;
+
 import android.util.Log;
 import android.widget.Toast;
 
@@ -28,6 +30,8 @@ public class PlayManuallyActivity extends AppCompatActivity {
     private int startingDistToExit;
     Intent intent;
     private Button shortcut;
+    private Maze maze;
+    private MazePanel panel;
 
     private int clicks = 0;
     private String Logv = "Play Manually Activity: ";
@@ -135,10 +139,12 @@ public class PlayManuallyActivity extends AppCompatActivity {
         });
 
 
-        shortcut = findViewById(R.id.shortcut);
+        panel = findViewById(R.id.shortcut);
+
         /**
          * if clicked, will take you to the winning screen.
          */
+        /**
         shortcut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +154,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 Winning();
             }
         });
+         */
 
 
         leftButton = findViewById(R.id.imageLeft);

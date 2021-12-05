@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/17575/AndroidStudioProjects/AMazeByRumitPatel/app/src/main/res/layout/activity_losing.xml" value="0.143359375" />
-        <entry key="..\:/Users/17575/AndroidStudioProjects/AMazeByRumitPatel/app/src/main/res/layout/activity_winning.xml" value="0.143359375" />
+        <entry key="..\:/Users/17575/AndroidStudioProjects/AMazeByRumitPatel/app/src/main/res/layout/activity_amaze.xml" value="0.22301912568306012" />
+        <entry key="..\:/Users/17575/AndroidStudioProjects/AMazeByRumitPatel/app/src/main/res/layout/activity_animation.xml" value="0.22301912568306012" />
+        <entry key="..\:/Users/17575/AndroidStudioProjects/AMazeByRumitPatel/app/src/main/res/layout/activity_generating.xml" value="0.22301912568306012" />
+        <entry key="..\:/Users/17575/AndroidStudioProjects/AMazeByRumitPatel/app/src/main/res/layout/activity_losing.xml" value="0.22301912568306012" />
+        <entry key="..\:/Users/17575/AndroidStudioProjects/AMazeByRumitPatel/app/src/main/res/layout/activity_manually.xml" value="0.22301912568306012" />
+        <entry key="..\:/Users/17575/AndroidStudioProjects/AMazeByRumitPatel/app/src/main/res/layout/activity_winning.xml" value="0.22301912568306012" />
         <entry key="app/src/main/res/drawable/LowBattery.xml" value="0.216796875" />
         <entry key="app/src/main/res/drawable/left_foreground.xml" value="0.216796875" />
         <entry key="app/src/main/res/drawable/selector.xml" value="0.16944444444444445" />

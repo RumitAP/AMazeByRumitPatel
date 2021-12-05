@@ -56,13 +56,10 @@
         android:translationY="-100dp"
         app:layout_constraintBottom_toTopOf="@id/zoom_out" />
 
-    <Button
+    <edu.wm.cs.cs301.RumitPatel.gui.MazePanel
         android:id="@+id/shortcut"
         android:layout_width="398dp"
         android:layout_height="276dp"
-        android:background="@color/colorPrimary"
-        android:backgroundTint="#8ADC8D"
-        android:text="Go2Winning"
         android:textColor="@android:color/white"
         android:textSize="30dp"
         android:translationY="-100dp" />
