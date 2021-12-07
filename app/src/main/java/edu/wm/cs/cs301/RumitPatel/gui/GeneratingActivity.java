@@ -138,21 +138,23 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
      */
     public void startProgress(){
 
-        for (progress=0; progress < 100; progress++){
-            try {
-                Thread.sleep(50);
-                Log.v(Logv,"Loading:" + progress);
-                progressBar.setProgress(progress);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    textView.setText(String.valueOf(progress+"%"));
-                }
-            });
-        }
+//        for (progress=0; progress < 100; progress++){
+//            try {
+//                Thread.sleep(50);
+//                Log.v(Logv,"Loading:" + progress);
+//                progressBar.setProgress(progress);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            handler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    textView.setText(String.valueOf(progress+"%"));
+//                }
+//            });
+//        }
+        progressBar.setProgress(progress);
+        textView.setText(String.valueOf(progress+"%"));
         driver = spinner2.getSelectedItem().toString();
         robot = spinner.getSelectedItem().toString();
         Play();
