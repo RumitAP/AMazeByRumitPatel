@@ -20,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import edu.wm.cs.cs301.RumitPatel.R;
 import edu.wm.cs.cs301.RumitPatel.generation.Maze;
+import edu.wm.cs.cs301.RumitPatel.generation.MazeFactory;
 import edu.wm.cs.cs301.RumitPatel.generation.Order;
 import edu.wm.cs.cs301.RumitPatel.generation.StubOrder;
 
@@ -44,6 +45,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
     private String Logv = "GeneratingActivity:";
     private int seed;
     static Maze maze;
+    private MazeFactory factory = new MazeFactory();
     /**
      * UI for generating activity
      * @param savedInstanceState
@@ -56,39 +58,43 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
         Intent getIntent = getIntent();
         builder = getIntent.getStringExtra("Builder");
         Rooms = getIntent.getStringExtra("Rooms");
-        level = getIntent.getStringExtra("Level");
+        level = getIntent.getStringExtra("level");
         mode = getIntent.getStringExtra("Mode");
         seed = getIntent.getExtras().getInt("seed");
 
-        //to get the int level for skill level
-        if (level == "1") {
-            intLevel = 1;
-        } else if (level == "2") {
-            intLevel = 2;
-        } else if (level == "3") {
-            intLevel = 3;
-        } else if (level == "4") {
-            intLevel = 4;
-        }else if (level == "5") {
-            intLevel = 5;
-        }else if (level == "6") {
-            intLevel = 6;
-        }else if (level == "7") {
-            intLevel = 7;
-        }else if (level == "8") {
-            intLevel = 8;
-        }else if (level == "9") {
-            intLevel = 9;
-        }else if (level == "0") {
-            intLevel = 0;
-        }
+//        //to get the int level for skill level
+//        if (level=="1") {
+//            Log.v("updating level", "Level 1");
+//            intLevel = 1;
+//        } else if (level.equals("2")) {
+//            intLevel = 2;
+//        } else if (level.equals("3")) {
+//            intLevel = 3;
+//        } else if (level.equals("4")) {
+//            intLevel = 4;
+//        }else if (level.equals("5v")) {
+//            intLevel = 5;
+//        }else if (level.equals("6")) {
+//            intLevel = 6;
+//        }else if (level.equals("7")) {
+//            intLevel = 7;
+//        }else if (level.equals("8")) {
+//            intLevel = 8;
+//        }else if (level.equals("9")) {
+//            intLevel = 9;
+//        }else if (level.equals("0")) {
+//            intLevel = 0;
+//        }
+        Log.v("Level is:", level);
+        intLevel = Integer.parseInt(level);
+        Log.isLoggable("Updating level:", intLevel);
 
         //to get the builder build for builder
-        if (builder == "DFS") {
+        if (builder.equalsIgnoreCase("DFS")) {
             build = Builder.DFS;
-        } else if(builder == "Prim"){
+        } else if(builder.equalsIgnoreCase("Prim")){
             build = Builder.Prim;
-        } else if (builder == "Boruvka") {
+        } else if (builder.equalsIgnoreCase("Boruvka")) {
             build = Builder.DFS;
         }
 
@@ -98,22 +104,6 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
         } else {
             hasRooms = true;
         }
-        
-        
-        progressBar = findViewById(R.id.ProgressBar);
-        textView = findViewById(R.id.textviewid);
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                startProgress();
-
-            }
-        });
-        thread.start();
-
-
         spinner = (Spinner) findViewById(R.id.robotSpinner);
         //Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -130,6 +120,25 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Apply the adapter to the spinner
         spinner2.setAdapter(adapter2);
+        
+        progressBar = findViewById(R.id.ProgressBar);
+        textView = findViewById(R.id.textviewid);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                startProgress();
+
+            }
+        });
+        thread.start();
+
+
+
+
+        //get the maze factory
+        factory.order(this);
 
     }
 
@@ -138,23 +147,23 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
      */
     public void startProgress(){
 
-//        for (progress=0; progress < 100; progress++){
-//            try {
-//                Thread.sleep(50);
-//                Log.v(Logv,"Loading:" + progress);
-//                progressBar.setProgress(progress);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            handler.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    textView.setText(String.valueOf(progress+"%"));
-//                }
-//            });
-//        }
-        progressBar.setProgress(progress);
-        textView.setText(String.valueOf(progress+"%"));
+        for (progress=0; progress < 100;){
+            try {
+                Thread.sleep(50);
+                Log.v(Logv,"Loading:" + progress);
+                progressBar.setProgress(progress);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    textView.setText(String.valueOf(progress+"%"));
+                }
+            });
+        }
+//        progressBar.setProgress(progress);
+//        textView.setText(String.valueOf(progress+"%"));
         driver = spinner2.getSelectedItem().toString();
         robot = spinner.getSelectedItem().toString();
         Play();
@@ -267,5 +276,6 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
     @Override
     public void updateProgress(int percentage) {
         progress = percentage; //TODO need to make the progress bar show this
+        Log.v("updateProgress", "progress is updating");
     }
 }
