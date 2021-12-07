@@ -43,6 +43,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
     private Intent intent;
     private String Logv = "GeneratingActivity:";
     private int seed;
+    static Maze maze;
     /**
      * UI for generating activity
      * @param savedInstanceState
@@ -258,7 +259,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
 
     @Override
     public void deliver(Maze mazeConfig) {
-
+        maze = mazeConfig;
     }
 
     @Override
