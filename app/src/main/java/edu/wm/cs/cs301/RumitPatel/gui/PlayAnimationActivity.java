@@ -16,6 +16,7 @@ import android.widget.ToggleButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.wm.cs.cs301.RumitPatel.R;
+import edu.wm.cs.cs301.RumitPatel.generation.Maze;
 
 public class PlayAnimationActivity extends AppCompatActivity {
     private ProgressBar progressBar;
@@ -42,6 +43,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
     private int energyConsumption = 0;
     private Button go2Winning;
     private Button go2Losing;
+    private MazePanel panel;
 
 
     /**
@@ -181,33 +183,8 @@ public class PlayAnimationActivity extends AppCompatActivity {
         sensorSetColor(rightSensor, rightSensorOperational);
 
 
-        go2Winning = findViewById(R.id.goToWinning);
-        /**
-         * if clicked, will take you to the winning screen.
-         */
-        go2Winning.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(PlayAnimationActivity.this, "Going to Winning State",
-                        Toast.LENGTH_SHORT).show();
-                Log.v(Logv, "Going to Winning State");
-                goToWinning();
-            }
-        });
+        panel = findViewById(R.id.goToWinning);
 
-        go2Losing = findViewById(R.id.goToLosing);
-        /**
-         * if clicked, will take you to the winning screen.
-         */
-        go2Losing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(PlayAnimationActivity.this, "Going to Losing State",
-                        Toast.LENGTH_SHORT).show();
-                Log.v(Logv, "Going to Losing State");
-                goToLosing();
-            }
-        });
 
 
     }

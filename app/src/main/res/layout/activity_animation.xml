@@ -102,7 +102,7 @@
         android:layout_width="29dp"
         android:layout_height="wrap_content"
         android:text="F"
-        android:translationX="-1100dp"
+        android:translationX="-1127dp"
         android:translationY="-10dp" />
 
     <TextView
@@ -121,17 +121,6 @@
         android:translationX="-1050dp"
         android:translationY="-10dp" />
 
-    <Button
-        android:id="@+id/goToLosing"
-        android:layout_width="159dp"
-        android:layout_height="63dp"
-        android:background="@color/colorPrimary"
-        android:backgroundTint="#8ADC8D"
-        android:text="Go2Losing"
-        android:textColor="@android:color/white"
-        android:textSize="30dp"
-        android:translationX="-1170dp"
-        android:translationY="200dp" />
 
     <TextView
         android:id="@+id/rightSensor"
@@ -141,16 +130,16 @@
         android:translationX="-1180dp"
         android:translationY="-10dp" />
 
-    <Button
+    <edu.wm.cs.cs301.RumitPatel.gui.MazePanel
         android:id="@+id/goToWinning"
-        android:layout_width="175dp"
-        android:layout_height="64dp"
+        android:layout_width="398dp"
+        android:layout_height="276dp"
         android:background="@color/colorPrimary"
         android:backgroundTint="#8ADC8D"
         android:text="Go2Winning"
         android:textColor="@android:color/white"
         android:textSize="30dp"
-        android:translationX="-1365dp"
-        android:translationY="125dp" />
+        android:translationX="-1300dp"
+        android:translationY="105dp" />
 
 </LinearLayout>

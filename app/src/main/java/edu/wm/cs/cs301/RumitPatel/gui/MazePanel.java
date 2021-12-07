@@ -80,8 +80,7 @@ public class MazePanel extends View implements P5PanelF21 {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        myTestImage(canvas);
-        //canvas.drawBitmap(bitmap, 0, 0, g);
+        canvas.drawBitmap(bitmap, 0, 0, g);
     }
 
     /**
