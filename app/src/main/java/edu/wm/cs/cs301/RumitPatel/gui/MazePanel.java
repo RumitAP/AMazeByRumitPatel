@@ -40,11 +40,37 @@ public class MazePanel extends View implements P5PanelF21 {
         commit();
     }
 
+    /**
+     * 7.1.1 test
+     * @param canvas
+     */
     public void testImage(Canvas canvas) {
         this.canvas = canvas;
         g.setColor(Color.RED);
         addFilledRectangle(300, 300, 150, 150);
         commit();
+    }
+
+    /**
+     * 7.1.3 Test
+     * @param canvas
+     */
+    public void myTestImage(Canvas canvas) {
+        this.canvas = canvas;
+        g.setColor(Color.RED);
+        addFilledOval(100,100,100,100);
+        g.setColor(Color.GREEN);
+        addFilledOval(250,250,100,100);
+        g.setColor(Color.YELLOW);
+        addFilledOval(350,350,100,100);
+        g.setColor(Color.BLUE);
+        addFilledOval(450,450,100,100);
+        g.setColor(Color.RED);
+        addLine(200,200,140,140);
+        g.setColor(Color.BLUE);
+        addLine(200,100,140,140);
+        g.setColor(Color.YELLOW);
+        addLine(200,500,140,140);
     }
 
     //private void update() {
@@ -54,8 +80,8 @@ public class MazePanel extends View implements P5PanelF21 {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawBitmap(bitmap, 0, 0, g);
-        invalidate();
+        myTestImage(canvas);
+        //canvas.drawBitmap(bitmap, 0, 0, g);
     }
 
     /**
@@ -108,7 +134,7 @@ public class MazePanel extends View implements P5PanelF21 {
         double r = weightFstColor * fstColor + (1 - weightFstColor) * sndColor;
         double g = weightFstColor * fstColor + (1 - weightFstColor) * sndColor;
         double b = weightFstColor * fstColor + (1 - weightFstColor) * sndColor;
-        double a = Math.max(fstColor, sndColor);
+        //double a = Math.max(fstColor, sndColor);
 
         return Color.rgb((int) r, (int) g, (int) b);
     }
@@ -195,6 +221,5 @@ public class MazePanel extends View implements P5PanelF21 {
 
     @Override
     public void setRenderingHint(P5RenderingHints hintKey, P5RenderingHints hintValue) {
-
     }
 }
