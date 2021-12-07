@@ -264,6 +264,6 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
 
     @Override
     public void updateProgress(int percentage) {
-
+        progress = percentage; //TODO need to make the progress bar show this
     }
 }
