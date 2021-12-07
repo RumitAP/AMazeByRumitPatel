@@ -62,32 +62,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
         mode = getIntent.getStringExtra("Mode");
         seed = getIntent.getExtras().getInt("seed");
 
-//        //to get the int level for skill level
-//        if (level=="1") {
-//            Log.v("updating level", "Level 1");
-//            intLevel = 1;
-//        } else if (level.equals("2")) {
-//            intLevel = 2;
-//        } else if (level.equals("3")) {
-//            intLevel = 3;
-//        } else if (level.equals("4")) {
-//            intLevel = 4;
-//        }else if (level.equals("5v")) {
-//            intLevel = 5;
-//        }else if (level.equals("6")) {
-//            intLevel = 6;
-//        }else if (level.equals("7")) {
-//            intLevel = 7;
-//        }else if (level.equals("8")) {
-//            intLevel = 8;
-//        }else if (level.equals("9")) {
-//            intLevel = 9;
-//        }else if (level.equals("0")) {
-//            intLevel = 0;
-//        }
-        Log.v("Level is:", level);
         intLevel = Integer.parseInt(level);
-        Log.isLoggable("Updating level:", intLevel);
 
         //to get the builder build for builder
         if (builder.equalsIgnoreCase("DFS")) {
