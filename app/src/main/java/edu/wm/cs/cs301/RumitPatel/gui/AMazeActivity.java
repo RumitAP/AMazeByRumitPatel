@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import edu.wm.cs.cs301.RumitPatel.R;
 
@@ -29,6 +30,8 @@ public class AMazeActivity extends AppCompatActivity {
     private String builder;
     private String rooms;
     private String Logv = "AMazeActivity";
+    private Random rand = new Random();
+    private int seed = rand.nextInt();
 
     /**
      * this is from the slides. It sets the driver, builder, and level.
@@ -142,6 +145,7 @@ public class AMazeActivity extends AppCompatActivity {
         intent.putExtra("level", str_level);
         intent.putExtra("Rooms", rooms);
         intent.putExtra("Mode","explore");
+        intent.putExtra("seed", seed);
         Toast.makeText(AMazeActivity.this, "Exploring",
                 Toast.LENGTH_SHORT).show();
         Log.v(Logv, "Creating new maze.");

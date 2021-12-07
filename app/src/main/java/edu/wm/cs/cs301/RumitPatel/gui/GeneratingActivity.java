@@ -1,6 +1,7 @@
 package edu.wm.cs.cs301.RumitPatel.gui;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,13 +19,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import edu.wm.cs.cs301.RumitPatel.R;
+import edu.wm.cs.cs301.RumitPatel.generation.Maze;
+import edu.wm.cs.cs301.RumitPatel.generation.Order;
+import edu.wm.cs.cs301.RumitPatel.generation.StubOrder;
 
-public class GeneratingActivity extends AppCompatActivity {
+public class GeneratingActivity extends AppCompatActivity implements Order {
 
     private String builder;
+    private Builder build;
     private String Rooms = "Yes";
     private boolean hasRooms;
     private String level;
+    private int intLevel;
     private String mode;
     private String robot;
     private String driver;
@@ -36,7 +42,7 @@ public class GeneratingActivity extends AppCompatActivity {
     private Spinner spinner;
     private Intent intent;
     private String Logv = "GeneratingActivity:";
-
+    private int seed;
     /**
      * UI for generating activity
      * @param savedInstanceState
@@ -51,6 +57,46 @@ public class GeneratingActivity extends AppCompatActivity {
         Rooms = getIntent.getStringExtra("Rooms");
         level = getIntent.getStringExtra("Level");
         mode = getIntent.getStringExtra("Mode");
+        seed = getIntent.getExtras().getInt("seed");
+
+        //to get the int level for skill level
+        if (level == "1") {
+            intLevel = 1;
+        } else if (level == "2") {
+            intLevel = 2;
+        } else if (level == "3") {
+            intLevel = 3;
+        } else if (level == "4") {
+            intLevel = 4;
+        }else if (level == "5") {
+            intLevel = 5;
+        }else if (level == "6") {
+            intLevel = 6;
+        }else if (level == "7") {
+            intLevel = 7;
+        }else if (level == "8") {
+            intLevel = 8;
+        }else if (level == "9") {
+            intLevel = 9;
+        }else if (level == "0") {
+            intLevel = 0;
+        }
+
+        //to get the builder build for builder
+        if (builder == "DFS") {
+            build = Builder.DFS;
+        } else if(builder == "Prim"){
+            build = Builder.Prim;
+        } else if (builder == "Boruvka") {
+            build = Builder.DFS;
+        }
+
+        //to get if perfect maze or not
+        if (Rooms == "Yes") {
+            hasRooms = false;
+        } else {
+            hasRooms = true;
+        }
         
         
         progressBar = findViewById(R.id.ProgressBar);
@@ -190,4 +236,33 @@ public class GeneratingActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public int getSkillLevel() {
+        return intLevel;
+    }
+
+    @Override
+    public Builder getBuilder() {
+        return build;
+    }
+
+    @Override
+    public boolean isPerfect() {
+        return hasRooms;
+    }
+
+    @Override
+    public int getSeed() {
+        return seed;
+    }
+
+    @Override
+    public void deliver(Maze mazeConfig) {
+
+    }
+
+    @Override
+    public void updateProgress(int percentage) {
+
+    }
 }
