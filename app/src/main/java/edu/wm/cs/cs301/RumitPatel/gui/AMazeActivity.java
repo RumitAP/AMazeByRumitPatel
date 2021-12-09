@@ -160,7 +160,7 @@ public class AMazeActivity extends AppCompatActivity {
     public void revisit() {
         Intent intent = new Intent(this, GeneratingActivity.class);
         intent.putExtra("Builder", builder);
-        intent.putExtra("Level", str_level);
+        intent.putExtra("level", str_level);
         intent.putExtra("Rooms", rooms);
         intent.putExtra("Mode","explore");
         Toast.makeText(AMazeActivity.this, "Revisiting",
