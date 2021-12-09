@@ -46,6 +46,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
     private int seed;
     static Maze maze;
     private MazeFactory factory = new MazeFactory();
+//    private StatePlaying state = new StatePlaying();
     /**
      * UI for generating activity
      * @param savedInstanceState

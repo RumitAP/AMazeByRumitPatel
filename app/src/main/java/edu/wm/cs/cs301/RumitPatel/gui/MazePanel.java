@@ -51,27 +51,27 @@ public class MazePanel extends View implements P5PanelF21 {
         commit();
     }
 
-    /**
-     * 7.1.3 Test
-     * @param canvas
-     */
-    public void myTestImage(Canvas canvas) {
-        this.canvas = canvas;
-        g.setColor(Color.RED);
-        addFilledOval(100,100,100,100);
-        g.setColor(Color.GREEN);
-        addFilledOval(250,250,100,100);
-        g.setColor(Color.YELLOW);
-        addFilledOval(350,350,100,100);
-        g.setColor(Color.BLUE);
-        addFilledOval(450,450,100,100);
-        g.setColor(Color.RED);
-        addLine(200,200,140,140);
-        g.setColor(Color.BLUE);
-        addLine(200,100,140,140);
-        g.setColor(Color.YELLOW);
-        addLine(200,500,140,140);
-    }
+//    /**
+//     * 7.1.3 Test
+//     * @param canvas
+//     */
+//    public void myTestImage(Canvas canvas) {
+//        this.canvas = canvas;
+//        g.setColor(Color.RED);
+//        addFilledOval(100,100,100,100);
+//        g.setColor(Color.GREEN);
+//        addFilledOval(250,250,100,100);
+//        g.setColor(Color.YELLOW);
+//        addFilledOval(350,350,100,100);
+//        g.setColor(Color.BLUE);
+//        addFilledOval(450,450,100,100);
+//        g.setColor(Color.RED);
+//        addLine(200,200,140,140);
+//        g.setColor(Color.BLUE);
+//        addLine(200,100,140,140);
+//        g.setColor(Color.YELLOW);
+//        addLine(200,500,140,140);
+//    }
 
     //private void update() {
     //    invalidate();
@@ -92,7 +92,10 @@ public class MazePanel extends View implements P5PanelF21 {
     @Override
     protected void onMeasure(int width, int height) {
         super.onMeasure(width, height);
+//        int mheight = getPaddingLeft() + getPaddingRight() + getSuggestedMinimumWidth();
+//        int mwidth = resolveSizeAndState(mheight, width, 1);
         this.setMeasuredDimension(width, height);
+//        Log.v("Width", "width =" + mwidth);
 
     }
 
@@ -105,7 +108,10 @@ public class MazePanel extends View implements P5PanelF21 {
 
     @Override
     public boolean isOperational() {
-        return false;
+        if(canvas == null) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -123,7 +129,10 @@ public class MazePanel extends View implements P5PanelF21 {
     @Override
     public void addBackground(float percentToExit) {
         g.setColor(blend(Color.parseColor("#BF40BF"), Color.parseColor("#000000"), percentToExit));
+
     }
+
+
 
     private int blend(int fstColor, int sndColor, double weightFstColor) {
         if (weightFstColor < 0.1)
@@ -165,8 +174,8 @@ public class MazePanel extends View implements P5PanelF21 {
     public void addFilledPolygon(int[] xPoints, int[] yPoints, int nPoints) {
         path.reset();
         path.moveTo(xPoints[0], yPoints[0]);
-        int i = 1;
-        while (i < nPoints) {
+        int i = 0;
+        while (++i < nPoints) {
             path.lineTo(xPoints[i], yPoints[i]); // should it both be the same? TODO
             Log.v("MazePanel", "drawing a polygon");
         }

@@ -35,6 +35,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
 
     private int clicks = 0;
     private String Logv = "Play Manually Activity: ";
+    private StatePlaying statePlaying = new StatePlaying();
 
     /**
      * Seeting up all buttons, ImageButtons, and toggles.
@@ -140,6 +141,9 @@ public class PlayManuallyActivity extends AppCompatActivity {
 
 
         panel = findViewById(R.id.shortcut);
+        statePlaying.setMazeConfiguration(GeneratingActivity.maze);
+        System.out.print(GeneratingActivity.maze);
+        statePlaying.start(panel);
 
         /**
          * if clicked, will take you to the winning screen.
