@@ -128,7 +128,8 @@ public class MazePanel extends View implements P5PanelF21 {
 
     @Override
     public void addBackground(float percentToExit) {
-        g.setColor(blend(Color.parseColor("#BF40BF"), Color.parseColor("#000000"), percentToExit));
+        g.setColor(blend(Color.BLUE, Color.GREEN, percentToExit));
+        addFilledRectangle(0, 0, 1393, 1393);
 
     }
 
@@ -177,9 +178,9 @@ public class MazePanel extends View implements P5PanelF21 {
         int i = 0;
         while (++i < nPoints) {
             path.lineTo(xPoints[i], yPoints[i]); // should it both be the same? TODO
-            Log.v("MazePanel", "drawing a polygon");
+            Log.v("MazePanel", "drawing a filled polygon");
         }
-        path.lineTo(xPoints[0], yPoints[0]);
+        path.close();
         canvas.drawPath(path, g);
 
     }
@@ -190,16 +191,17 @@ public class MazePanel extends View implements P5PanelF21 {
      *
      * @param xPoints are the x-coordinates of points for the polygon
      * @param yPoints are the y-coordinates of points for the polygon
+     * @param yPoints are the y-coordinates of points for the polygon
      * @param nPoints is the number of points, the length of the arrays
      */
     @Override
     public void addPolygon(int[] xPoints, int[] yPoints, int nPoints) {
         path.reset();
         path.moveTo(xPoints[0], yPoints[0]);
-        int i = 1;
-        while (i < nPoints) {
+        int i = 0;
+        while (++i < nPoints) {
             path.lineTo(xPoints[i], yPoints[i]); // should it both be the same? TODO
-            Log.v("MazePanel", "drawing a polygon");
+            Log.v("MazePanel", "drawing a add polygon");
         }
         path.lineTo(xPoints[0], yPoints[0]);
         canvas.drawPath(path, g);
@@ -208,6 +210,7 @@ public class MazePanel extends View implements P5PanelF21 {
 
     @Override
     public void addLine(int startX, int startY, int endX, int endY) {
+
         canvas.drawLine(startX, startY, endX, endY, g);
     }
 
@@ -223,6 +226,7 @@ public class MazePanel extends View implements P5PanelF21 {
 
     @Override
     public void addMarker(float x, float y, String str) {
+        g.setTextSize(40);
         canvas.drawText(str, x, y, g);
         Log.v("MazePanel", "just did addMarker");
     }

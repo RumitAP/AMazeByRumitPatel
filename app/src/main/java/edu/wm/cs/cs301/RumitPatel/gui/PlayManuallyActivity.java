@@ -47,6 +47,11 @@ public class PlayManuallyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manually);
 
+        panel = findViewById(R.id.shortcut);
+        statePlaying.setMazeConfiguration(GeneratingActivity.maze);
+        statePlaying.setPlayManual(this);
+        statePlaying.start(panel);
+
         wholeMazeToggle = findViewById(R.id.wholeMazeToggle);
 
         /**
@@ -56,17 +61,16 @@ public class PlayManuallyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (wholeMazeToggle.isChecked()){
-                    Toast.makeText(PlayManuallyActivity.this, "Show Map: On",
-                            Toast.LENGTH_SHORT).show();
+                    //statePlaying.keyDown(Constants.UserInput.TOGGLELOCALMAP, 0);
+                    statePlaying.keyDown(Constants.UserInput.TOGGLEFULLMAP, 0);
                     Log.v(Logv, "Map On");
                 }else {
-                    Toast.makeText(PlayManuallyActivity.this, "Show Map: Off",
-                            Toast.LENGTH_SHORT).show();
+                    //statePlaying.keyDown(Constants.UserInput.TOGGLELOCALMAP, 0);
+                    statePlaying.keyDown(Constants.UserInput.TOGGLEFULLMAP, 0);
                     Log.v(Logv, "Map Off");
                 }
 
             }
-
         });
 
         solutionToggle = findViewById(R.id.solutionToggle);
@@ -78,14 +82,15 @@ public class PlayManuallyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (solutionToggle.isChecked()){
-                    Toast.makeText(PlayManuallyActivity.this, "Show Solution: On",
-                            Toast.LENGTH_SHORT).show();
+                    //statePlaying.keyDown(Constants.UserInput.TOGGLELOCALMAP, 0);
+                    statePlaying.keyDown(Constants.UserInput.TOGGLESOLUTION, 0);
                     Log.v(Logv, "Solution On");
                 }else {
-                    Toast.makeText(PlayManuallyActivity.this, "Show Solution: Off",
-                            Toast.LENGTH_SHORT).show();
+                    //statePlaying.keyDown(Constants.UserInput.TOGGLELOCALMAP, 0);
+                    statePlaying.keyDown(Constants.UserInput.TOGGLESOLUTION, 0);
                     Log.v(Logv, "Solution Off");
                 }
+
 
             }
 
@@ -100,12 +105,10 @@ public class PlayManuallyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (visibleToggle.isChecked()){
-                    Toast.makeText(PlayManuallyActivity.this, "Visible Walls: On",
-                            Toast.LENGTH_SHORT).show();
+                    statePlaying.keyDown(Constants.UserInput.TOGGLELOCALMAP, 0);
                     Log.v(Logv, "Visible Walls: On");
                 }else {
-                    Toast.makeText(PlayManuallyActivity.this, "Visible Walls: Off",
-                            Toast.LENGTH_SHORT).show();
+                    statePlaying.keyDown(Constants.UserInput.TOGGLELOCALMAP, 0);
                     Log.v(Logv, "Visible Walls: Off");
                 }
 
@@ -122,6 +125,8 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 Toast.makeText(PlayManuallyActivity.this, "Zoom In",
                         Toast.LENGTH_SHORT).show();
                 Log.v(Logv, "Zooming In");
+                statePlaying.keyDown(Constants.UserInput.ZOOMIN, 0);
+
             }
         });
 
@@ -136,27 +141,23 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 Toast.makeText(PlayManuallyActivity.this, "Zoom Out",
                         Toast.LENGTH_SHORT).show();
                 Log.v(Logv, "Zooming Out");
+                statePlaying.keyDown(Constants.UserInput.ZOOMOUT, 0);
+
             }
         });
-
-
-        panel = findViewById(R.id.shortcut);
-        statePlaying.setMazeConfiguration(GeneratingActivity.maze);
-        System.out.print(GeneratingActivity.maze);
-        statePlaying.start(panel);
 
         /**
          * if clicked, will take you to the winning screen.
          */
         /**
-        shortcut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(PlayManuallyActivity.this, "Going to Winning State",
-                        Toast.LENGTH_SHORT).show();
-                Log.v(Logv, "Going to Winning State");
-                Winning();
-            }
+         shortcut.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+        Toast.makeText(PlayManuallyActivity.this, "Going to Winning State",
+        Toast.LENGTH_SHORT).show();
+        Log.v(Logv, "Going to Winning State");
+        Winning();
+        }
         });
          */
 
@@ -171,6 +172,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 Toast.makeText(PlayManuallyActivity.this, "Going Left WOOOO!",
                         Toast.LENGTH_SHORT).show();
                 Log.v(Logv, "Going Left");
+                statePlaying.keyDown(Constants.UserInput.LEFT, 0);
             }
         });
 
@@ -184,6 +186,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 Toast.makeText(PlayManuallyActivity.this, "Going Right WOOOO!",
                         Toast.LENGTH_SHORT).show();
                 Log.v(Logv, "Going Right");
+                statePlaying.keyDown(Constants.UserInput.RIGHT, 0);
             }
         });
 
@@ -198,6 +201,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 Toast.makeText(PlayManuallyActivity.this, "Going Forward WOOOO!",
                         Toast.LENGTH_SHORT).show();
                 Log.v(Logv, "Going Forward");
+                statePlaying.keyDown(Constants.UserInput.UP, 0);
             }
         });
 
@@ -212,6 +216,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 Toast.makeText(PlayManuallyActivity.this, "Jumping WOOOO!",
                         Toast.LENGTH_SHORT).show();
                 Log.v(Logv, "Jumping");
+                statePlaying.keyDown(Constants.UserInput.JUMP, 0);
             }
         });
 
@@ -233,7 +238,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
     /**
      * takes user to the winning screen.
      */
-    private void Winning() {
+    public void Winning() {
         intent = new Intent(this, WinningActivity.class);
         intent.putExtra("Clicks",clicks);
         intent.putExtra("Starting Distance", startingDistToExit);
