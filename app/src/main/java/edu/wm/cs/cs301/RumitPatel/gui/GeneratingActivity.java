@@ -75,7 +75,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
         }
 
         //to get if perfect maze or not
-        if (Rooms == "Yes") {
+        if (Rooms.equals("Yes")) {
             hasRooms = false;
         } else {
             hasRooms = true;

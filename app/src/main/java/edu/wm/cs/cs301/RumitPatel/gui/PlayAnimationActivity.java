@@ -59,7 +59,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animation);
 
-        panel = findViewById(R.id.shortcut);
+        panel = findViewById(R.id.goToWinning);
         statePlaying.setMazeConfiguration(GeneratingActivity.maze);
         statePlaying.setPlayAnimation(this);
         statePlaying.start(panel);
