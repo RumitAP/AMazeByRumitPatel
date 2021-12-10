@@ -30,8 +30,8 @@ public class WinningActivity extends AppCompatActivity {
 
 
         Intent getIntent = getIntent();
-        pathLength = getIntent.getStringExtra("Path Length");
-        shortestPath = getIntent.getStringExtra("Distance To Exit From Start");
+        pathLength = getIntent.getStringExtra("Clicks");
+        shortestPath = getIntent.getStringExtra("shortest");
 
         Path = findViewById(R.id.shortestPath1);
         Length = findViewById(R.id.pathLegnth1);

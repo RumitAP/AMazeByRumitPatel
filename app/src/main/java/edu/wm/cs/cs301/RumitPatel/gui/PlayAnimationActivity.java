@@ -44,6 +44,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
     private Button go2Winning;
     private Button go2Losing;
     private MazePanel panel;
+    private StatePlaying statePlaying = new StatePlaying();
 
 
     /**
@@ -57,6 +58,11 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animation);
+
+        panel = findViewById(R.id.shortcut);
+        statePlaying.setMazeConfiguration(GeneratingActivity.maze);
+        statePlaying.setPlayAnimation(this);
+        statePlaying.start(panel);
 
         //Create progress bar and corresponding thread
         progressBar = findViewById(R.id.ProgressBar1);
@@ -80,12 +86,14 @@ public class PlayAnimationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (wholeMazeToggle.isChecked()){
-                    Toast.makeText(PlayAnimationActivity.this, "Show Map: On",
-                            Toast.LENGTH_SHORT).show();
+                    statePlaying.keyDown(Constants.UserInput.TOGGLELOCALMAP, 0);
+                    statePlaying.keyDown(Constants.UserInput.TOGGLEFULLMAP, 0);
+                    statePlaying.keyDown(Constants.UserInput.TOGGLESOLUTION, 0);
                     Log.v(Logv, "Map On");
                 }else {
-                    Toast.makeText(PlayAnimationActivity.this, "Show Map: Off",
-                            Toast.LENGTH_SHORT).show();
+                    statePlaying.keyDown(Constants.UserInput.TOGGLELOCALMAP, 0);
+                    statePlaying.keyDown(Constants.UserInput.TOGGLEFULLMAP, 0);
+                    statePlaying.keyDown(Constants.UserInput.TOGGLESOLUTION, 0);
                     Log.v(Logv, "Map Off");
                 }
 
@@ -127,13 +135,13 @@ public class PlayAnimationActivity extends AppCompatActivity {
         playPauseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (playPauseButton.getText().equals("Play")) {
-                    playPauseButton.setText("Pause");
+                    playPauseButton.setText("Paused");
                     Toast.makeText(PlayAnimationActivity.this, "Paused",
                             Toast.LENGTH_SHORT).show();
                     Log.v(Logv, "Paused");
                 }
                 else {
-                    playPauseButton.setText("Play");
+                    playPauseButton.setText("Playing");
                     Toast.makeText(PlayAnimationActivity.this, "Playing",
                             Toast.LENGTH_SHORT).show();
                     Log.v(Logv, "Playing");

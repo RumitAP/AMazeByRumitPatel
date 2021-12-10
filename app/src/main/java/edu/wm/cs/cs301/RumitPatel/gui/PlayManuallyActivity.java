@@ -33,7 +33,6 @@ public class PlayManuallyActivity extends AppCompatActivity {
     private Maze maze;
     private MazePanel panel;
 
-    private int clicks = 0;
     private String Logv = "Play Manually Activity: ";
     private StatePlaying statePlaying = new StatePlaying();
 
@@ -197,7 +196,6 @@ public class PlayManuallyActivity extends AppCompatActivity {
         forwardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clicks += 1;
                 Toast.makeText(PlayManuallyActivity.this, "Going Forward WOOOO!",
                         Toast.LENGTH_SHORT).show();
                 Log.v(Logv, "Going Forward");
@@ -212,7 +210,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
         jumpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clicks += 1;
+
                 Toast.makeText(PlayManuallyActivity.this, "Jumping WOOOO!",
                         Toast.LENGTH_SHORT).show();
                 Log.v(Logv, "Jumping");
@@ -240,7 +238,8 @@ public class PlayManuallyActivity extends AppCompatActivity {
      */
     public void Winning() {
         intent = new Intent(this, WinningActivity.class);
-        intent.putExtra("Clicks",clicks);
+        intent.putExtra("Clicks",String.valueOf(statePlaying.clicks));
+        intent.putExtra("shortest", String.valueOf(GeneratingActivity.maze.getMazedists().getMaxDistance()));
         intent.putExtra("Starting Distance", startingDistToExit);
         startActivity(intent);
         finish();

@@ -65,6 +65,8 @@ public class StatePlaying extends DefaultState {
     Floorplan seenCells; // a matrix with cells to memorize which cells are visible from the current point of view
     // the FirstPersonView obtains this information and the Map uses it for highlighting currently visible walls on the map
     private CompassRose cr; // compass rose to show current direction
+    public int clicks = 0;
+    public int clicks2 = 0;
     
     // debug stuff
     //private boolean deepdebug = false;
@@ -177,6 +179,8 @@ public class StatePlaying extends DefaultState {
             break;
         case UP: // move forward
             walk(1);
+            clicks += 1;
+            clicks2 += 1;
 //             check termination, did we leave the maze?
             if (isOutside(px, py)) {
                 playManual.Winning();
@@ -206,6 +210,8 @@ public class StatePlaying extends DefaultState {
             // go to position if within maze
             if (mazeConfig.isValidPosition(px + dx, py + dy)) {
                 setCurrentPosition(px + dx, py + dy) ;
+                clicks += 1;
+                clicks2 += 1;
                 draw() ;
             }
             break;
