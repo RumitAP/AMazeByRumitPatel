@@ -101,16 +101,16 @@ public class Map {
 	 * Make the map being drawn bigger on the screen
 	 */
 	public void incrementMapScale() {
-		mapScale += 1 ;
+		mapScale += 20 ;
 	}
 	
 	/**
 	 * Make the map being drawn smaller on the screen
 	 */
 	public void decrementMapScale() {
-		mapScale -= 1 ;
+		mapScale -= 20 ;
 		if (1 > mapScale)
-			mapScale = 1 ;
+			mapScale = 75 ;
 	}
 
 	/**
