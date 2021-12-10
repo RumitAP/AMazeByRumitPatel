@@ -146,7 +146,15 @@ public interface DistanceSensor {
 	 * @throws UnsupportedOperationException if method not supported
 	 */
 	void stopFailureAndRepairProcess() throws UnsupportedOperationException;
-	
+
+
+	/**
+	 * Provides the maze information that is necessary to make
+	 * a DistanceSensor able to calculate distances.
+	 * @throws IllegalArgumentException if parameter is null
+	 * or if it does not contain a floor plan
+	 */
+	void setController(StatePlaying controller);
 	
 
 }

@@ -218,4 +218,8 @@ public class UnreliableRobot extends ReliableRobot implements Robot{
 				return null;
 		}
 	}
+
+	public List<Direction> getUnreliableDirections() {
+		return unreliableDirections;
+	}
 }

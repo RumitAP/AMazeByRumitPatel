@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +17,8 @@ import android.widget.ToggleButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.wm.cs.cs301.RumitPatel.R;
-import edu.wm.cs.cs301.RumitPatel.generation.Maze;
+import edu.wm.cs.cs301.RumitPatel.generation.CardinalDirection;
+import edu.wm.cs.cs301.RumitPatel.generation.Distance;
 
 public class PlayAnimationActivity extends AppCompatActivity {
     private ProgressBar progressBar;
@@ -29,6 +31,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
     private boolean leftSensorOperational = true;
     private boolean rightSensorOperational = true;
     private boolean backSensorOperational = true;
+    private boolean pause = false;
     private int energy;
     Handler handler=new Handler();
     private String Logv = "Animation Activity:";
@@ -44,7 +47,18 @@ public class PlayAnimationActivity extends AppCompatActivity {
     private Button go2Winning;
     private Button go2Losing;
     private MazePanel panel;
+
+    private RobotDriver driver;
+    private String sensorConfiguration = "1111";
+    private Robot robot;
     private StatePlaying statePlaying = new StatePlaying();
+    private int startingDistToExit;
+
+    CardinalDirection cd = null;
+    DistanceSensor l;
+    DistanceSensor r;
+    DistanceSensor f;
+    DistanceSensor b;
 
 
     /**
@@ -58,11 +72,48 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animation);
-
         panel = findViewById(R.id.goToWinning);
         statePlaying.setMazeConfiguration(GeneratingActivity.maze);
         statePlaying.setPlayAnimation(this);
-        statePlaying.start(panel);
+
+        int[] start = GeneratingActivity.maze.getStartingPosition();
+        startingDistToExit =GeneratingActivity.maze.getDistanceToExit(start[0], start[1]);
+
+        Intent getIntent = getIntent();
+
+        if (getIntent.getStringExtra("driver").equalsIgnoreCase("Wizard")) {
+            driver = new Wizard();
+            sensorConfiguration = "1111";
+            robot = new ReliableRobot();
+        }
+        else {
+            driver = new Wallfollower();
+            switch (getIntent.getStringExtra("robot")) {
+                case "Shaky":
+                    sensorConfiguration = "0000";
+                    break;
+                case "Soso":
+                    sensorConfiguration = "1010";
+                    break;
+                case "Mediocre":
+                    sensorConfiguration = "1110";
+                    break;
+                case "Premium":
+                default:
+                    sensorConfiguration = "1111";
+            }
+            Log.v(Logv, getIntent.getStringExtra("robot") + " -- using configuration: " + sensorConfiguration);
+            robot = sensorConfiguration.contains("0") ? new UnreliableRobot() : new ReliableRobot();
+        }
+        robot.setController(statePlaying);
+        addDistanceSensor(0, Robot.Direction.FORWARD);
+        addDistanceSensor(1, Robot.Direction.LEFT);
+        addDistanceSensor(2, Robot.Direction.RIGHT);
+        addDistanceSensor(3, Robot.Direction.BACKWARD);
+        driver.setMaze(GeneratingActivity.maze);
+        driver.setRobot(robot);
+
+
 
         //Create progress bar and corresponding thread
         progressBar = findViewById(R.id.ProgressBar1);
@@ -71,10 +122,12 @@ public class PlayAnimationActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                Looper.prepare();
                 startProgress();
             }
         });
         thread.start();
+
 
 
         wholeMazeToggle = findViewById(R.id.wholeMazeToggle1);
@@ -132,24 +185,25 @@ public class PlayAnimationActivity extends AppCompatActivity {
         playPauseButton = (Button) findViewById(R.id.playPauseButton); // or whatever ID you set it to
         playPauseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (playPauseButton.getText().equals("Play")) {
-                    playPauseButton.setText("Paused");
-                    Toast.makeText(PlayAnimationActivity.this, "Paused",
-                            Toast.LENGTH_SHORT).show();
+                if (playPauseButton.getText().equals(getText(R.string.playing))) {
+                    playPauseButton.setText(R.string.paused);
+                    pause = true;
                     Log.v(Logv, "Paused");
                 }
                 else {
-                    playPauseButton.setText("Playing");
-                    Toast.makeText(PlayAnimationActivity.this, "Playing",
-                            Toast.LENGTH_SHORT).show();
+                    playPauseButton.setText(R.string.playing);
+                    pause = false;
                     Log.v(Logv, "Playing");
                 }
+                driver.togglePaused();
             }
         });
 
 
         seekBar = findViewById(R.id.speedSeekBar);
         seekBar.setMax(9);
+        speed = 0;
+        updateDriverDelay();
         /**
          * Changes the speed of the animation through interaction with the speedbar.
          */
@@ -159,6 +213,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
            speedchange = progress;
            speed = speedchange;
+           updateDriverDelay();
        }
 
        @Override
@@ -176,20 +231,42 @@ public class PlayAnimationActivity extends AppCompatActivity {
                    Toast.LENGTH_SHORT).show();
            Log.v(Logv, "Speed is: " + speedchange);
            speed = speedchange;
+           updateDriverDelay();
        }
    });
 
-        frontSensor = findViewById(R.id.frontSensor);
-        backSensor = findViewById(R.id.backSensor);
-        leftSensor = findViewById(R.id.leftSensor);
-        rightSensor = findViewById(R.id.rightSensor);
-        sensorSetColor(frontSensor, frontSensorOperational);
-        sensorSetColor(backSensor, backSensorOperational);
-        sensorSetColor(leftSensor, leftSensorOperational);
-        sensorSetColor(rightSensor, rightSensorOperational);
+        statePlaying.sensorSetColor(R.id.frontSensor, frontSensorOperational);
+        statePlaying.sensorSetColor(R.id.backSensor, backSensorOperational);
+        statePlaying.sensorSetColor(R.id.leftSensor, leftSensorOperational);
+        statePlaying.sensorSetColor(R.id.rightSensor, rightSensorOperational);
 
+        statePlaying.start(panel);
 
-        panel = findViewById(R.id.goToWinning);
+        Thread driverThread = new Thread(() -> {
+            Looper.prepare();
+
+            try {
+                if (driver.drive2Exit()) {
+                    goToWinning();
+                } else {
+                    goToLosing();
+                }
+            }
+            catch (InterruptedException ignore) { }
+            catch (Exception e) {
+                Log.v("PlayAnimationActivity", "error driving to exit");
+                e.printStackTrace();
+                goToLosing();
+            }
+            finally {
+                if (robot instanceof UnreliableRobot) {
+                    for (Robot.Direction d : ((UnreliableRobot)robot).getUnreliableDirections()) {
+                        robot.stopFailureAndRepairProcess(d);
+                    }
+                }
+            }
+        });
+        driverThread.start();
 
 
 
@@ -201,39 +278,38 @@ public class PlayAnimationActivity extends AppCompatActivity {
      * progress bar progression on background thread
      */
     public void startProgress(){
-        energyConsumption = 0;
-        for (energy=3500; energy > 0; energy--){
-            try {
-                Thread.sleep(50);
-                Log.v(Logv,"EnergyLevel:" + energy);
-                progressBar.setProgress(energy);
-                energyConsumption += 1;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    textView.setText(String.valueOf(energy+"%"));
-                }
-            });
-        }
+//        energyConsumption = 0;
+//        for (energy=3500; energy > 0; energy--){
+//            try {
+//                Thread.sleep(50);
+//                progressBar.setProgress(energy);
+//                energyConsumption += 1;
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            handler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    textView.setText(String.valueOf(energy+"%"));
+//                }
+//            });
+//        }
 
     }
 
-    private void sensorSetColor( TextView sense, boolean sensor){
-        if (sensor == true) {
-            sense.setTextColor(Color.parseColor("#33cc33"));
-            Toast.makeText(PlayAnimationActivity.this, "Sensor is operational!",
-                    Toast.LENGTH_SHORT).show();
-            Log.v(Logv, "Sensor is operational!");
-        }else {
-            sense.setTextColor(Color.parseColor("#ff0000"));
-            Toast.makeText(PlayAnimationActivity.this, "Sensor is NOT operational!",
-                    Toast.LENGTH_SHORT).show();
-            Log.v(Logv, "Sensor is NOT operational!");
-        }
-    }
+//    private void sensorSetColor( TextView sense, boolean sensor){
+//        if (sensor == true) {
+//            sense.setTextColor(Color.parseColor("#33cc33"));
+//            Toast.makeText(PlayAnimationActivity.this, "Sensor is operational!",
+//                    Toast.LENGTH_SHORT).show();
+//            Log.v(Logv, "Sensor is operational!");
+//        }else {
+//            sense.setTextColor(Color.parseColor("#ff0000"));
+//            Toast.makeText(PlayAnimationActivity.this, "Sensor is NOT operational!",
+//                    Toast.LENGTH_SHORT).show();
+//            Log.v(Logv, "Sensor is NOT operational!");
+//        }
+//    }
 
     /**
      * take user to AMazeActivity if back button is pressed
@@ -270,12 +346,37 @@ public class PlayAnimationActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LosingActivity.class);
         intent.putExtra("Energy Consumption", 3500);
         intent.putExtra("Path Length", 0);
-        intent.putExtra("Distance To Exit From Start", 20);
+        intent.putExtra("Distance To Exit From Start",  20);
         Toast.makeText(PlayAnimationActivity.this, "Losing",
                 Toast.LENGTH_SHORT).show();
         Log.v(Logv, "Losing");
         startActivity(intent);
 
     }
+
+    /**
+     * Instantiates and adds a Sensor
+     * @param index the index of the sensorConfiguration to grab the sensorType for
+     * @param direction the direction to add the sensor
+     */
+    private void addDistanceSensor(int index, Robot.Direction direction) {
+        // the type of sensor to instantiate:
+        // '0' for unreliable, otherwise reliable
+        char sensorType = sensorConfiguration.charAt(index);
+        ReliableSensor sensor = sensorType == '0' ? new UnreliableSensor() : new ReliableSensor();
+        sensor.setController(statePlaying);
+        robot.addDistanceSensor(sensor, direction);
+
+        if (robot instanceof UnreliableRobot && sensorType == '0') {
+            robot.startFailureAndRepairProcess(direction, 4, 2);
+        }
+    }
+
+    private void updateDriverDelay() {
+        driver.setDelay((9 - speed) * 100);
+    }
+
+
+
 
 }

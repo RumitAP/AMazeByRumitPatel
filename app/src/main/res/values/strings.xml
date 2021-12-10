@@ -25,5 +25,7 @@
         <item>Soso</item>
         <item>Shaky</item>
     </string-array>
+    <string name="playing">Playing</string>
+    <string name="paused">Paused</string>
 
 </resources>

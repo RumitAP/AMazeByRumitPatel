@@ -20,6 +20,8 @@ import edu.wm.cs.cs301.RumitPatel.gui.Robot.Turn;
 public class Wallfollower implements RobotDriver{
 	private final int INITIAL_BATTERY_LEVEL = 3500;
 	private Robot robot;
+	private int delay = 0;
+	private boolean paused = false;
 	
 
 	@Override
@@ -68,18 +70,39 @@ public class Wallfollower implements RobotDriver{
 				throw new Exception("Robot has stopped due to a problem.");
 			}
 
+			if (paused) {
+				synchronized (this) {
+					try {
+						this.wait();
+					}
+					catch (InterruptedException ignore) {
+
+					}
+				}
+			}
+
 			drive1Step2Exit();
+			delayStep();
 		}
 
 		//if at exit, then turn to teh direction of the exit and move through it.
-		while (!robot.canSeeThroughTheExitIntoEternity(Direction.LEFT)) {
-			robot.rotate(Turn.LEFT);
+		while (!robot.canSeeThroughTheExitIntoEternity(Robot.Direction.LEFT)) {
+			robot.rotate(Robot.Turn.LEFT);
 		}
-		robot.rotate(Turn.LEFT);
+		robot.rotate(Robot.Turn.LEFT);
 		robot.move(1);
 
 
 		return true;
+	}
+
+	private void delayStep() {
+		if (delay > 0) {
+			try {
+				Thread.sleep(delay);
+			}
+			catch (InterruptedException ignore) {}
+		}
 	}
 
 	@Override
@@ -90,6 +113,24 @@ public class Wallfollower implements RobotDriver{
 	@Override
 	public int getPathLength() {
 		return robot.getOdometerReading();
+	}
+
+	@Override
+	public void setDelay(int delay) {
+		this.delay = delay;
+	}
+
+	@Override
+	public void togglePaused() {
+		if (paused) {
+			paused = false;
+			synchronized (this) {
+				this.notify();
+			}
+		}
+		else {
+			paused = true;
+		}
 	}
 
 }

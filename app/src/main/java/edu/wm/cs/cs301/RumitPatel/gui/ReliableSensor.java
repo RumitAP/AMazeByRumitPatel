@@ -13,6 +13,7 @@ public class ReliableSensor implements DistanceSensor {
 	
 	private Maze maze;
 	private int sensorAngle;
+	protected StatePlaying controller;
 	private final int[] move = new int[2];
 	private final int ENERGY_FOR_SENSING = 1;
 
@@ -224,6 +225,11 @@ public class ReliableSensor implements DistanceSensor {
 	}
 
 	@Override
+	public void setController(StatePlaying controller) {
+		this.controller = controller;
+	}
+
+	@Override
 	/**
 	 * Provides the angle, the relative direction at which this 
 	 * sensor is mounted on the robot.
@@ -281,6 +287,7 @@ public class ReliableSensor implements DistanceSensor {
 	public void stopFailureAndRepairProcess() throws UnsupportedOperationException {
 		throw new UnsupportedOperationException();
 	}
+
 
 
 }

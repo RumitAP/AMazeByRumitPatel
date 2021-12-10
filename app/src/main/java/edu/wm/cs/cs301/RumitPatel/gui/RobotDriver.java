@@ -82,6 +82,20 @@ public interface RobotDriver {
 	 * @return the total length of the journey in number of cells traversed
 	 */
 	int getPathLength();
-	
+
+	/**
+	 * The speed toggle on PlayAnimation allows control over how fast
+	 * the driver performs actions. This changes the driver's speed
+	 *
+	 * @param delay the time in milliseconds before stepping
+	 */
+	void setDelay(int delay);
+
+	/**
+	 * Tells the robot whether to pause animation
+	 */
+	void togglePaused();
 }
+	
+
 

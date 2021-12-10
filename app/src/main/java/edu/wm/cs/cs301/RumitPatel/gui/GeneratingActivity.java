@@ -207,7 +207,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order {
             Log.v(Logv, "Wizard selected");
             intent = new Intent(this, PlayAnimationActivity.class);
             intent.putExtra("Robot",robot);
-            intent.putExtra("Driver", driver);
+            intent.putExtra("driver", driver);
             startActivity(intent);
             finish();
         }else if(driver.equalsIgnoreCase("Wallfollower")){

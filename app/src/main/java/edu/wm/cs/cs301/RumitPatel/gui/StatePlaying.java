@@ -1,11 +1,14 @@
 package edu.wm.cs.cs301.RumitPatel.gui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.content.Context;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import edu.wm.cs.cs301.RumitPatel.generation.Maze;
 import edu.wm.cs.cs301.RumitPatel.gui.FirstPersonView;
@@ -16,6 +19,7 @@ import edu.wm.cs.cs301.RumitPatel.gui.Constants.UserInput;
 import edu.wm.cs.cs301.RumitPatel.generation.CardinalDirection;
 import edu.wm.cs.cs301.RumitPatel.generation.Floorplan;
 import edu.wm.cs.cs301.RumitPatel.generation.Maze;
+import edu.wm.cs.cs301.RumitPatel.R;
 
 
 /**
@@ -469,6 +473,42 @@ public class StatePlaying extends DefaultState {
                 angle+" dx="+dx+" dy="+dy+" "+viewdx+" "+viewdy);
     }
     */
+    public void sensorSetColor(int senseAngleOrId, boolean operational) {
+        // only PlayAnimation can have sensors
+        if (playAnimation != null) {
+            int senseId;
+            switch (senseAngleOrId) {
+                case 270:
+                    senseId = R.id.leftSensor;
+                    break;
+                case 90:
+                    senseId = R.id.rightSensor;
+                    break;
+                case 180:
+                    senseId = R.id.backSensor;
+                    break;
+                case 0:
+                    senseId = R.id.frontSensor;
+                    break;
+                default:
+                    senseId = senseAngleOrId;
+            }
+
+            TextView sense = playAnimation.findViewById(senseId);
+            if (operational) {
+                sense.setTextColor(Color.parseColor("#33cc33"));
+                Toast.makeText(playAnimation, "Sensor is operational!",
+                        Toast.LENGTH_SHORT).show();
+                Log.v("StatePlaying", "Sensor is operational!");
+            } else {
+                sense.setTextColor(Color.parseColor("#ff0000"));
+                Toast.makeText(playAnimation, "Sensor is NOT operational!",
+                        Toast.LENGTH_SHORT).show();
+                Log.v("StatePlaying", "Sensor is NOT operational!");
+            }
+        }
+    }
+
 }
 
 

@@ -15,6 +15,8 @@ public class Wizard implements RobotDriver{
 	
 	private ReliableRobot robot;
 	private Maze maze;
+	private int delay = 0;
+	private boolean paused = false;
 	
 	
 	@Override
@@ -38,7 +40,7 @@ public class Wizard implements RobotDriver{
 	}
 	
 	//turns toward the direction of the neighbor closer to exit.
-	private void rotateDirections(CardinalDirection cd) {
+	public void rotateDirections(CardinalDirection cd) {
 		
 		CardinalDirection currentDirection = robot.getCurrentDirection();
 		//switch on currentDirection of robot
@@ -132,7 +134,7 @@ public class Wizard implements RobotDriver{
 	}
 	
 	//so Robot can get the direction of the neighbor.
-	private int[] getNeighborCloserToExit(int x, int y) {
+	public int[] getNeighborCloserToExit(int x, int y) {
 		assert maze.isValidPosition(x,y) : "Invalid position";
 		// corner case, (x,y) is exit position
 		if (maze.getFloorplan().isExitPosition(x, y))
@@ -200,105 +202,40 @@ public class Wizard implements RobotDriver{
 	 * @throws Exception thrown if robot stopped due to some problem, e.g. lack of energy
 	 */
 	public boolean drive2Exit() throws Exception {
-		
-		int[] startPosition = robot.getCurrentPosition();
-		CardinalDirection cd = null;
-		
+
 		while (!robot.isAtExit()) {
+			if (paused) {
+				synchronized (this) {
+					try {
+						this.wait();
+					}
+					catch (InterruptedException ignore) {
 
-			if (robot.hasStopped()) {
-				throw new Exception("Robot has stopped due to a problem.");
+					}
+				}
 			}
-			
-			//positin of neighbor closer to exit is found as well as it's direction.
-			int[] nextPosition = this.getNeighborCloserToExit(startPosition[0], startPosition[1]);
-			if (nextPosition == null) {
-				break;
-			}
-			
-			//set the direction we want the robot to turn to.
-			if (nextPosition[2] == 1) {
-				
-				cd = CardinalDirection.North;
-				
-			} else if (nextPosition[2] == 2) {
-				
-				cd = CardinalDirection.South;
-				
-			} else if (nextPosition[2] == 3) {
-				
-				cd = CardinalDirection.East;
-				
-			} else if (nextPosition[2] == 4) {
-				
-				cd = CardinalDirection.West;
-				
-			}
-			
-			this.rotateDirections(cd);
-			
-			robot.move(1);
-			
-			//reset the new startPosition for next loop
-			startPosition = robot.getCurrentPosition();
-			cd = robot.getCurrentDirection();
-			
+			drive1Step2Exit();
+			delayStep();
+
 			//if we traveled more than area of maze, we are looping.
-			if (getPathLength() > 2* (maze.getWidth() * maze.getHeight())) {
-				
+			if (getPathLength() > 2 * (maze.getWidth() * maze.getHeight())) {
 				return false;
-				
-			}
-			
-		}
-		
-		//once at exit, check each direction to see where exit is and move through it.
-		if (robot.hasSensor(Direction.FORWARD)) {
-			System.out.println("in_here" + robot.getCurrentPosition());
-			if (robot.canSeeThroughTheExitIntoEternity(Direction.FORWARD)) {
-				
-				robot.move(1);
-				return true;
-			
-			}
-			
-		}
-		if (robot.hasSensor(Direction.LEFT)) {
-			
-			if (robot.canSeeThroughTheExitIntoEternity(Direction.LEFT)) {
-				
-				robot.rotate(Turn.LEFT);
-				robot.move(1);
-				return true;
-				
-			}
-			
-		}
-		if (robot.hasSensor(Direction.RIGHT)) {
-			
-			if (robot.canSeeThroughTheExitIntoEternity(Direction.RIGHT)) {
-				
-				robot.rotate(Turn.RIGHT);
-				robot.move(1);
-				return true;
-				
-			}
-			
-		}
-		if (robot.hasSensor(Direction.BACKWARD)) {
-			
-			if (robot.canSeeThroughTheExitIntoEternity(Direction.BACKWARD)) {
-	
-				robot.rotate(Turn.AROUND);
-				robot.move(1);
-				return true;
-				
 			}
 		}
-		
-		return false;
 
-	}
+		//once at exit, check each direction to see where exit is and move through it.
+		if (rotateBeforeExit(Direction.FORWARD, null) ||
+				rotateBeforeExit(Direction.LEFT, Turn.LEFT) ||
+				rotateBeforeExit(Direction.RIGHT, Turn.RIGHT) ||
+				rotateBeforeExit(Direction.BACKWARD, Turn.AROUND)) {
+
+			robot.move(1);
+			return true;
+		}
+		return false;
+			
+		}
+
 
 	@Override
 	/**
@@ -318,80 +255,56 @@ public class Wizard implements RobotDriver{
 	 */
 	public boolean drive1Step2Exit() throws Exception {
 		//same as Drive2Exit except without while loop
-		
+
 		int[] startPosition = robot.getCurrentPosition();
-		CardinalDirection cd = null;
-		
+
 		if (robot.hasStopped()) {
 			throw new Exception("Robot has stopped due to a problem.");
 		}
-		
-		if (!robot.isAtExit()) {
-		int[] nextPosition = this.getNeighborCloserToExit(startPosition[0], startPosition[1]);
-		
-		if (nextPosition[2] == 1) {
-			
-			cd = CardinalDirection.North;
-			
-		} else if (nextPosition[2] == 2) {
-			
-			cd = CardinalDirection.South;
-			
-		} else if (nextPosition[2] == 3) {
-			
-			cd = CardinalDirection.East;
-			
-		} else if (nextPosition[2] == 4) {
-			
-			cd = CardinalDirection.West;
-			
-		}
-		
-		this.rotateDirections(cd);
-		
-		robot.move(1);
-		
-		return true;
 
+		if (!robot.isAtExit()) {
+			int[] nextPosition = this.getNeighborCloserToExit(startPosition[0], startPosition[1]);
+			if (nextPosition != null) {
+
+				switch (nextPosition[2]) {
+					case 1:
+						this.rotateDirections(CardinalDirection.North);
+						break;
+					case 2:
+						this.rotateDirections(CardinalDirection.South);
+						break;
+					case 3:
+						this.rotateDirections(CardinalDirection.East);
+						break;
+					default:
+						this.rotateDirections(CardinalDirection.West);
+				}
+			}
+			else {
+				return false;
+			}
+
+			robot.move(1);
 		}
-		
-		if (robot.hasSensor(Direction.FORWARD)) {
-			System.out.println("hh");
-			if (robot.canSeeThroughTheExitIntoEternity(Direction.FORWARD)) {
-				
-				return false;
-			
-			}
-			
-		} else if (robot.hasSensor(Direction.LEFT)) {
-			
-			if (robot.canSeeThroughTheExitIntoEternity(Direction.LEFT)) {
-				
-				robot.rotate(Turn.LEFT);
-				return false;
-				
-			}
-			
-		} else if (robot.hasSensor(Direction.RIGHT)) {
-			
-			if (robot.canSeeThroughTheExitIntoEternity(Direction.RIGHT)) {
-				
-				robot.rotate(Turn.RIGHT);
-				return false;
-				
-			}
-			
-		} else if (robot.hasSensor(Direction.BACKWARD)) {
-			
-			if (robot.canSeeThroughTheExitIntoEternity(Direction.BACKWARD)) {
-				
-				robot.rotate(Turn.AROUND);
-				return false;
-				
-			}
-		}
-		
 		return true;
+	}
+
+	/**
+	 * Helper method used in drive2exit to rotate appropriately before moving through
+	 * the exit
+	 *
+	 * @param direction the direction for the robot to sense
+	 * @param turn the direction to turn, if applicable
+	 * @return boolean, whether the robot is at the exit and rotated successfully
+	 */
+	private boolean rotateBeforeExit(Direction direction, Turn turn) {
+		if (robot.hasSensor(direction) && robot.canSeeThroughTheExitIntoEternity(direction)) {
+			if (turn != null) {
+				robot.rotate(turn);
+			}
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -406,4 +319,30 @@ public class Wizard implements RobotDriver{
 		return robot.getOdometerReading();
 	}
 
+	@Override
+	public void setDelay(int delay) {
+		this.delay = delay;
+	}
+
+	private void delayStep() {
+		if (delay > 0) {
+			try {
+				Thread.sleep(delay);
+			}
+			catch (InterruptedException ignore) {}
+		}
+	}
+
+	@Override
+	public void togglePaused() {
+		if (paused) {
+			paused = false;
+			synchronized (this) {
+				this.notify();
+			}
+		}
+		else {
+			paused = true;
+		}
+	}
 }
