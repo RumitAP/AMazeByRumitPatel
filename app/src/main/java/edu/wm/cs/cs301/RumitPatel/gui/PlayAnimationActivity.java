@@ -256,7 +256,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
             catch (Exception e) {
                 Log.v("PlayAnimationActivity", "error driving to exit");
                 e.printStackTrace();
-                goToLosing();
+                //goToLosing();
             }
             finally {
                 if (robot instanceof UnreliableRobot) {
@@ -267,7 +267,6 @@ public class PlayAnimationActivity extends AppCompatActivity {
             }
         });
         driverThread.start();
-
 
 
     }
@@ -328,9 +327,10 @@ public class PlayAnimationActivity extends AppCompatActivity {
      */
     public void goToWinning() {
         Intent intent = new Intent(this, WinningActivity.class);
-        intent.putExtra("Energy Consumption", energyConsumption);
-        intent.putExtra("Path Length", 0);
-        intent.putExtra("Distance To Exit From Start", 20);
+        intent.putExtra("Energy Consumption", String.valueOf(driver.getEnergyConsumption()));
+        intent.putExtra("Clicks", String.valueOf(driver.getPathLength()));
+        intent.putExtra("shortest", String.valueOf(GeneratingActivity.maze.getMazedists().getMaxDistance()));
+        intent.putExtra("Starting Distance", startingDistToExit);
         Toast.makeText(PlayAnimationActivity.this, "Winning",
                 Toast.LENGTH_SHORT).show();
         Log.v(Logv, "Winning");
@@ -344,9 +344,10 @@ public class PlayAnimationActivity extends AppCompatActivity {
      */
     public void goToLosing() {
         Intent intent = new Intent(this, LosingActivity.class);
-        intent.putExtra("Energy Consumption", 3500);
-        intent.putExtra("Path Length", 0);
-        intent.putExtra("Distance To Exit From Start",  20);
+        intent.putExtra("Energy Consumption", String.valueOf(driver.getEnergyConsumption()));
+        intent.putExtra("Clicks", String.valueOf(driver.getPathLength()));
+        intent.putExtra("shortest", String.valueOf(GeneratingActivity.maze.getMazedists().getMaxDistance()));
+        intent.putExtra("Starting Distance", startingDistToExit);
         Toast.makeText(PlayAnimationActivity.this, "Losing",
                 Toast.LENGTH_SHORT).show();
         Log.v(Logv, "Losing");

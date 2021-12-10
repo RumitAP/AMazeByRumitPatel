@@ -2,6 +2,7 @@ package edu.wm.cs.cs301.RumitPatel.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,9 @@ public class WinningActivity extends AppCompatActivity {
 
         Intent getIntent = getIntent();
         pathLength = getIntent.getStringExtra("Clicks");
+        Log.v("Path:", pathLength);
         shortestPath = getIntent.getStringExtra("shortest");
+        Log.v("Path:", pathLength);
 
         Path = findViewById(R.id.shortestPath1);
         Length = findViewById(R.id.pathLegnth1);

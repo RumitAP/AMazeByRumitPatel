@@ -186,9 +186,7 @@ public class StatePlaying extends DefaultState {
             clicks += 1;
             clicks2 += 1;
 //             check termination, did we leave the maze?
-            if (isOutside(px, py)) {
-                playManual.Winning();
-            }else if (isOutside(px, py)) {
+            if (playManual != null && isOutside(px, py)) {
                 playManual.Winning();
             }
             break;
@@ -201,9 +199,7 @@ public class StatePlaying extends DefaultState {
         case DOWN: // move backward
             walk(-1);
             // check termination, did we leave the maze?
-            if (isOutside(px, py)) {
-                playManual.Winning();
-            }else if (isOutside(px, py)) {
+            if (playManual != null && isOutside(px, py)) {
                 playManual.Winning();
             }
             break;

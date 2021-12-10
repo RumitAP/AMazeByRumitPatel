@@ -28,8 +28,8 @@ public class LosingActivity extends AppCompatActivity {
 
         Intent getIntent = getIntent();
         energyConsumption = getIntent.getStringExtra("Energy Consumption");
-        pathLength = getIntent.getStringExtra("Path Length");
-        shortestPath = getIntent.getStringExtra("Distance To Exit From Start");
+        pathLength = getIntent.getStringExtra("Clicks");
+        shortestPath = getIntent.getStringExtra("shortest");
 
 
 
@@ -45,9 +45,9 @@ public class LosingActivity extends AppCompatActivity {
         Consumption = findViewById(R.id.energyConsumption);
         Path = findViewById(R.id.shortestPath);
         Length = findViewById(R.id.pathLegnth);
-        Consumption.setText("Energy Consumption: "+"2000");
-        Path.setText("Shortest Path: " + "100");
-        Length.setText("Your Path: " + "200");
+        Consumption.setText("Energy Consumption: "+ energyConsumption);
+        Path.setText("Shortest Path: " + pathLength);
+        Length.setText("Your Path: " + shortestPath);
 
 
 
