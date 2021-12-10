@@ -109,8 +109,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
         zoomInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PlayAnimationActivity.this, "Zoom In",
-                        Toast.LENGTH_SHORT).show();
+                statePlaying.keyDown(Constants.UserInput.ZOOMIN, 0);
                 Log.v(Logv, "Zooming In");
             }
         });
@@ -123,8 +122,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
         zoomOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PlayAnimationActivity.this, "Zoom Out",
-                        Toast.LENGTH_SHORT).show();
+                statePlaying.keyDown(Constants.UserInput.ZOOMOUT, 0);
                 Log.v(Logv, "Zooming Out");
             }
         });
