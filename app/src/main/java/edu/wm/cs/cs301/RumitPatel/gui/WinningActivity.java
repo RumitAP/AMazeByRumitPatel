@@ -36,8 +36,8 @@ public class WinningActivity extends AppCompatActivity {
         Path = findViewById(R.id.shortestPath1);
         Length = findViewById(R.id.pathLegnth1);
 
-        Path.setText("Shortest Path: " + "100");
-        Length.setText("Your Path: " + "200");
+        Path.setText("Shortest Path: " + shortestPath);
+        Length.setText("Your Path: " + pathLength);
 
         Toast.makeText(WinningActivity.this, "Pressing the back button will let you restart.",
                 Toast.LENGTH_SHORT).show();

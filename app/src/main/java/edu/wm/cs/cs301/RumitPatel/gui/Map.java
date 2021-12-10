@@ -78,7 +78,7 @@ public class Map {
 		this.mapUnit = mapUnit ;
 		this.stepSize = stepSize ;
 		this.seenWalls = seenWalls ;
-		this.mapScale = 125; // 1 <= map_scale
+		this.mapScale = 75; // 1 <= map_scale
 		this.maze = maze ;
 		// correctness considerations
 		assert maze != null : "Map: maze configuration can't be null at instantiation!" ;
