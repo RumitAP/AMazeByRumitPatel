@@ -2,6 +2,7 @@ package edu.wm.cs.cs301.RumitPatel.gui;
 
 import android.content.Intent;
 import android.media.MediaDrm;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,10 @@ import android.widget.Toast;
 import android.view.View;
 import android.util.Log;
 
+/**
+ * used https://developer.android.com/training/data-storage/shared-preferences
+ * for revisit
+ */
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -109,6 +114,15 @@ public class AMazeActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 Log.v(Logv,"Exploring");
 
+                //https://developer.android.com/training/data-storage/shared-preferences
+                getPreferences(MODE_PRIVATE)
+                        .edit()
+                        .putString("builder", builder)
+                        .putString("level", str_level)
+                        .putString("rooms", rooms)
+                        .putInt("seed", seed)
+                        .apply();
+
                 explore();
             }
         });
@@ -158,11 +172,13 @@ public class AMazeActivity extends AppCompatActivity {
      * https://developer.android.com/guide/components/intents-filters#:~:text=An%20Intent%20object%20carries%20information,action%20to%20take%20and%20the
      */
     public void revisit() {
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
         Intent intent = new Intent(this, GeneratingActivity.class);
-        intent.putExtra("Builder", builder);
-        intent.putExtra("level", str_level);
-        intent.putExtra("Rooms", rooms);
-        intent.putExtra("Mode","explore");
+        intent.putExtra("Builder", preferences.getString("builder", builder));
+        intent.putExtra("level", preferences.getString("level", str_level));
+        intent.putExtra("Rooms", preferences.getString("rooms", rooms));
+        intent.putExtra("Mode","revisit");
+        intent.putExtra("seed", preferences.getInt("seed", seed));
         Toast.makeText(AMazeActivity.this, "Revisiting",
                 Toast.LENGTH_SHORT).show();
         Log.v(Logv, "Loading old maze.");

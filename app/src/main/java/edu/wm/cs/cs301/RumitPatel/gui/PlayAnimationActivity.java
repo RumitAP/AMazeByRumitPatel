@@ -20,6 +20,11 @@ import edu.wm.cs.cs301.RumitPatel.R;
 import edu.wm.cs.cs301.RumitPatel.generation.CardinalDirection;
 import edu.wm.cs.cs301.RumitPatel.generation.Distance;
 
+/**
+ * Used these for threads: https://developer.android.com/reference/android/os/Looper
+ * https://developer.android.com/reference/java/lang/Thread
+ */
+
 public class PlayAnimationActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView textView;
